@@ -27,9 +27,9 @@ class OptionsState extends MusicBeatState
 		}
 		switch(label)
 		{
-			case 'Note Colors':
+			case 'Nota Renkleri':
 				openSubState(new options.NotesColorSubState());
-			case 'Controls':
+			case 'Kontroller':
 				openSubState(new options.ControlsSubState());
 			case 'Graphics':
 				openSubState(new options.GraphicsSettingsSubState());
