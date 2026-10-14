@@ -11,7 +11,7 @@ class OptionsState extends MusicBeatState
 		'Adjust Delay and Combo',
 		'Graphics',
 		'Visuals',
-		'Gameplay'
+		'Oynanıs Ayarlari'
 		#if TRANSLATIONS_ALLOWED , 'Language' #end
 		,'Mobile Options'
 	];
