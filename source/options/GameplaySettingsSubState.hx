@@ -8,31 +8,31 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		rpcTitle = 'Gameplay Settings Menu'; //for Discord Rich Presence
 
 		//I'd suggest using "Downscroll" as an example for making your own option since it is the simplest here
-		var option:Option = new Option('Downscroll', //Name
+		var option:Option = new Option('Aşağı Kaydırma', //Name
 			'If checked, notes go Down instead of Up, simple enough.', //Description
 			'downScroll', //Save data variable name
 			BOOL); //Variable type
 		addOption(option);
 
-		var option:Option = new Option('Middlescroll',
+		var option:Option = new Option('Ortadan Kaydırma',
 			'If checked, your notes get centered.',
 			'middleScroll',
 			BOOL);
 		addOption(option);
 
-		var option:Option = new Option('Opponent Notes',
+		var option:Option = new Option('Rakip Notalar',
 			'If unchecked, opponent notes get hidden.',
 			'opponentStrums',
 			BOOL);
 		addOption(option);
 
-		var option:Option = new Option('Ghost Tapping',
+		var option:Option = new Option('Hayalet Dokunusu',
 			"If checked, you won't get misses from pressing keys\nwhile there are no notes able to be hit.",
 			'ghostTapping',
 			BOOL);
 		addOption(option);
 		
-		var option:Option = new Option('Auto Pause',
+		var option:Option = new Option('Oto Durdur',
 			"If checked, the game automatically pauses if the screen isn't on focus.",
 			'autoPause',
 			BOOL);
@@ -45,7 +45,7 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			BOOL);
 		addOption(option);
 
-		var option:Option = new Option('Disable Reset Button',
+		var option:Option = new Option('Yeniden Baslatma Kapat',
 			"If checked, pressing Reset won't do anything.",
 			'noReset',
 			BOOL);
@@ -64,7 +64,7 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			BOOL);
 		addOption(option);
 
-		var option:Option = new Option('Hitsound Volume',
+		var option:Option = new Option('Nota Sesi',
 			'Funny notes does \"Tick!\" when you hit them.',
 			'hitsoundVolume',
 			PERCENT);
