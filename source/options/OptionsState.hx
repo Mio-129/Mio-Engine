@@ -6,14 +6,14 @@ import backend.StageData;
 class OptionsState extends MusicBeatState
 {
 	var options:Array<String> = [
-		'Note Colors',
-		'Controls',
+		'Nota Renkleri',
+		'Kontroller',
 		'Adjust Delay and Combo',
-		'Graphics',
-		'Visuals',
+		'Grafikler',
+		'Sanallar',
 		'Oynanıs Ayarlari'
 		#if TRANSLATIONS_ALLOWED , 'Language' #end
-		,'Mobile Options'
+		,'Mobil Ayarlari'
 	];
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 	private static var curSelected:Int = 0;
