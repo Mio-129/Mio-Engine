@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="menu_mods.png">
+	<SubTexture name="mods idle0000" x="89" y="2" width="542" height="115"/>
+	<SubTexture name="mods idle0001" x="89" y="2" width="542" height="115"/>
+	<SubTexture name="mods idle0002" x="89" y="2" width="542" height="115"/>
+	<SubTexture name="mods idle0003" x="89" y="2" width="542" height="115"/>
+	<SubTexture name="mods idle0004" x="89" y="2" width="542" height="115"/>
+	<SubTexture name="mods idle0005" x="89" y="2" width="542" height="115"/>
+	<SubTexture name="mods idle0006" x="89" y="2" width="542" height="115"/>
+	<SubTexture name="mods idle0007" x="89" y="2" width="542" height="115"/>
+	<SubTexture name="mods idle0008" x="89" y="2" width="542" height="115"/>
+	<SubTexture name="mods selected0000" x="2" y="119" width="716" height="148"/>
+	<SubTexture name="mods selected0001" x="2" y="119" width="716" height="148"/>
+	<SubTexture name="mods selected0002" x="2" y="119" width="716" height="148"/>
+</TextureAtlas>
