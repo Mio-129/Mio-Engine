@@ -28,3 +28,4 @@ art/build_html-debug.bat
 
 # local scratch (glyph previews, one-off tooling output)
 .glyphwork/
+__pycache__/

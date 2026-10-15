@@ -35,7 +35,18 @@ practice_mode: "Antrenman Modu"
 charting_mode: "Chart Modu"
 blueballed: "Ölüm: {1}"
 
+// Main Menu
+images/mainmenu/menu_story_mode: "images/tr-TR/mainmenu/menu_story_mode"
+images/mainmenu/menu_freeplay: "images/tr-TR/mainmenu/menu_freeplay"
+images/mainmenu/menu_credits: "images/tr-TR/mainmenu/menu_credits"
+images/mainmenu/menu_mods: "images/tr-TR/mainmenu/menu_mods"
+images/titleEnter: "images/tr-TR/titleEnter"
+
 // Story Mode
+images/Menu_Tracks: "images/tr-TR/Menu_Tracks"
+images/menudifficulties/easy: "images/tr-TR/menudifficulties/easy"
+images/menudifficulties/normal: "images/tr-TR/menudifficulties/normal"
+images/menudifficulties/hard: "images/tr-TR/menudifficulties/hard"
 week_score: "PUAN: {1}"
 
 storyname_week5: "KIRMIZI KAR"
