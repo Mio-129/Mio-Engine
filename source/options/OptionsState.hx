@@ -6,14 +6,14 @@ import backend.StageData;
 class OptionsState extends MusicBeatState
 {
 	var options:Array<String> = [
-		'Nota Renkleri',
-		'Kontroller',
-		'Adjust Delay and Combo',
-		'Grafikler',
-		'Sanallar',
-		'Oynanıs Ayarlari'
-		#if TRANSLATIONS_ALLOWED , 'Language' #end
-		,'Mobil Ayarlari'
+		'note colors',
+		'controls',
+		'adjust delay and combo',
+		'graphics',
+		'visuals',
+		'gameplay'
+		#if TRANSLATIONS_ALLOWED , 'language' #end
+		,'mobile options'
 	];
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 	private static var curSelected:Int = 0;
@@ -21,27 +21,27 @@ class OptionsState extends MusicBeatState
 	public static var onPlayState:Bool = false;
 
 	function openSelectedSubstate(label:String) {
-		if (label != "Adjust Delay and Combo"){
+		if (label != 'adjust delay and combo'){
 			removeTouchPad();
 			persistentUpdate = false;
 		}
 		switch(label)
 		{
-			case 'Nota Renkleri':
+			case 'note colors':
 				openSubState(new options.NotesColorSubState());
-			case 'Kontroller':
+			case 'controls':
 				openSubState(new options.ControlsSubState());
-			case 'Graphics':
+			case 'graphics':
 				openSubState(new options.GraphicsSettingsSubState());
-			case 'Visuals':
+			case 'visuals':
 				openSubState(new options.VisualsSettingsSubState());
-			case 'Gameplay':
+			case 'gameplay':
 				openSubState(new options.GameplaySettingsSubState());
-			case 'Adjust Delay and Combo':
+			case 'adjust delay and combo':
 				MusicBeatState.switchState(new options.NoteOffsetState());
-			case 'Mobile Options':
+			case 'mobile options':
 				openSubState(new mobile.options.MobileOptionsSubState());
-			case 'Language':
+			case 'language':
 				openSubState(new options.LanguageSubState());
 		}
 	}

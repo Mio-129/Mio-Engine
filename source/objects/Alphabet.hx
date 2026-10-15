@@ -203,8 +203,8 @@ class Alphabet extends FlxSpriteGroup
 				var spaceChar:Bool = (character == " " || (bold && character == "_"));
 				if (spaceChar) consecutiveSpaces++;
 
-				var isAlphabet:Bool = AlphaCharacter.isTypeAlphabet(character.toLowerCase());
-				if (AlphaCharacter.allLetters.exists(character.toLowerCase()) && (!bold || !spaceChar))
+				var isAlphabet:Bool = AlphaCharacter.isTypeAlphabet(AlphaCharacter.getLowercaseChar(character));
+				if (AlphaCharacter.allLetters.exists(AlphaCharacter.getLowercaseChar(character)) && (!bold || !spaceChar))
 				{
 					if (consecutiveSpaces > 0)
 					{
@@ -363,7 +363,7 @@ class AlphaCharacter extends FlxSprite
 		{
 			this.character = character;
 			curLetter = null;
-			var lowercase:String = this.character.toLowerCase();
+			var lowercase:String = getLowercaseChar(this.character);
 			if(allLetters.exists(lowercase)) curLetter = allLetters.get(lowercase);
 			else curLetter = allLetters.get('?');
 
@@ -405,7 +405,21 @@ class AlphaCharacter extends FlxSprite
 			|| (ascii >= 97 && ascii <= 122)
 			|| (ascii >= 192 && ascii <= 214)
 			|| (ascii >= 216 && ascii <= 246)
-			|| (ascii >= 248 && ascii <= 255);
+			|| (ascii >= 248 && ascii <= 255)
+			|| (ascii >= 256 && ascii <= 383); // Latin Extended-A (Turkish: Ğ/ğ, İ/ı, Ş/ş)
+	}
+
+	// Turkish-specific letters need deterministic lowercase keys (String.toLowerCase
+	// is not reliable for İ/Ğ/Ş on every target)
+	public static function getLowercaseChar(c:String):String
+	{
+		return switch(c)
+		{
+			case 'İ': 'ı';
+			case 'Ğ': 'ğ';
+			case 'Ş': 'ş';
+			default: c.toLowerCase();
+		}
 	}
 
 	private function set_image(name:String)
