@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mio Engine - High-Performance Modern C++ Game Engine</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            400: '#818cf8',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            900: '#312e81',
+                            accent: '#a855f7',
+                            cyan: '#06b6d4'
+                        },
+                        dark: {
+                            bg: '#0B0F17',
+                            card: '#131B2E',
+                            border: '#1E293B',
+                            hover: '#1C273E'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0B0F17;
+            color: #F3F4F6;
+            font-family: 'Inter', sans-serif;
+        }
+        .glow-effect {
+            position: relative;
+        }
+        .glow-effect::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: inherit;
+            box-shadow: 0 0 25px rgba(99, 102, 241, 0.25);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+        .glow-effect:hover::after {
+            opacity: 1;
+        }
+        .code-gradient {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%);
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0B0F17;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1E293B;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4f46e5;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-brand-500 selection:text-white">
+
+    <!-- Header Navigation -->
+    <header class="sticky top-0 z-50 backdrop-blur-md bg-dark-bg/80 border-b border-dark-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-brand-accent flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-brand-500/30">
+                    <i class="fa-solid font-mono">&lt;M&gt;</i>
+                </div>
+                <span class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white via-slate-200 to-brand-400">Mio-Engine</span>
+                <span class="text-xs px-2.5 py-0.5 rounded-full bg-brand-500/10 text-brand-400 border border-brand-500/20 font-mono">v0.1.0-alpha</span>
+            </div>
+            
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-300">
+                <a href="#overview" class="hover:text-brand-400 transition-colors">Overview</a>
+                <a href="#features" class="hover:text-brand-400 transition-colors">Features</a>
+                <a href="#architecture" class="hover:text-brand-400 transition-colors">Architecture</a>
+                <a href="#quickstart" class="hover:text-brand-400 transition-colors">Quick Start</a>
+            </nav>
+
+            <div class="flex items-center space-x-4">
+                <a href="https://github.com/Mio-129/Mio-Engine" target="_blank" rel="noopener noreferrer" 
+                   class="flex items-center space-x-2 bg-dark-card hover:bg-dark-hover text-slate-200 px-4 py-2 rounded-lg border border-dark-border hover:border-brand-500/50 transition-all duration-200 text-sm font-semibold group">
+                    <i class="fa-brands fa-github text-lg group-hover:scale-110 transition-transform"></i>
+                    <span>GitHub Repo</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-400 group-hover:text-brand-400 ml-1"></i>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        <!-- Hero Section -->
+        <section id="overview" class="relative overflow-hidden py-24 lg:py-32 border-b border-dark-border">
+            <!-- Background Elements -->
+            <div class="absolute -top-40 -left-40 w-96 h-96 bg-brand-600/20 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute top-1/2 -right-40 w-96 h-96 bg-brand-accent/15 rounded-full blur-3xl pointer-events-none"></div>
+            
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="text-center max-w-3xl mx-auto">
+                    <div class="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-slate-800/80 border border-slate-700 text-slate-300 text-xs font-mono mb-6">
+                        <span class="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                        <span>Active Open-Source Development</span>
+                    </div>
+                    <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white mb-6 leading-tight">
+                        Next-Generation <br/>
+                        <span class="bg-clip-text text-transparent bg-gradient-to-r from-brand-400 via-brand-accent to-brand-cyan">C++ Game Engine Architecture</span>
+                    </h1>
+                    <p class="text-lg sm:text-xl text-slate-400 mb-8 leading-relaxed">
+                        A modular, lightweight, and high-performance game engine built for flexibility, multi-threaded rendering, cross-platform capabilities, and streamlined modern development.
+                    </p>
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                        <a href="#quickstart" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-gradient-to-r from-brand-600 to-brand-500 hover:from-brand-500 hover:to-brand-400 text-white font-semibold shadow-lg shadow-brand-500/25 transition-all text-center">
+                            Get Started
+                        </a>
+                        <a href="https://github.com/Mio-129/Mio-Engine" target="_blank" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-dark-card hover:bg-dark-hover border border-dark-border text-slate-200 font-semibold transition-all text-center flex items-center justify-center space-x-2">
+                            <i class="fa-brands fa-github text-lg"></i>
+                            <span>Star on GitHub</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Stats / Key Metrics -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-16 max-w-4xl mx-auto">
+                    <div class="bg-dark-card/60 border border-dark-border p-4 rounded-xl text-center">
+                        <p class="text-xs text-slate-400 uppercase tracking-wider font-semibold">Language</p>
+                        <p class="text-xl font-bold text-slate-100 mt-1">Modern C++20</p>
+                    </div>
+                    <div class="bg-dark-card/60 border border-dark-border p-4 rounded-xl text-center">
+                        <p class="text-xs text-slate-400 uppercase tracking-wider font-semibold">API Support</p>
+                        <p class="text-xl font-bold text-brand-400 mt-1">Vulkan / OpenGL</p>
+                    </div>
+                    <div class="bg-dark-card/60 border border-dark-border p-4 rounded-xl text-center">
+                        <p class="text-xs text-slate-400 uppercase tracking-wider font-semibold">Architecture</p>
+                        <p class="text-xl font-bold text-slate-100 mt-1">Entity-Component System</p>
+                    </div>
+                    <div class="bg-dark-card/60 border border-dark-border p-4 rounded-xl text-center">
+                        <p class="text-xs text-slate-400 uppercase tracking-wider font-semibold">Build System</p>
+                        <p class="text-xl font-bold text-brand-accent mt-1">CMake</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Showcase Section -->
+        <section id="features" class="py-20 border-b border-dark-border">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-2xl mx-auto mb-12">
+                    <h2 class="text-3xl font-bold text-white tracking-tight">Core Features</h2>
+                    <p class="text-slate-400 mt-2">Engineered with modularity, performance, and developer ergonomics at its core.</p>
+                </div>
+
+                <!-- Filter Tags -->
+                <div class="flex flex-wrap items-center justify-center gap-2 mb-10" id="feature-filters">
+                    <button data-filter="all" class="px-4 py-2 rounded-lg text-sm font-medium bg-brand-600 text-white transition-all filter-btn active">All Features</button>
+                    <button data-filter="rendering" class="px-4 py-2 rounded-lg text-sm font-medium bg-dark-card text-slate-400 hover:text-white hover:bg-dark-hover transition-all filter-btn">Rendering</button>
+                    <button data-filter="core" class="px-4 py-2 rounded-lg text-sm font-medium bg-dark-card text-slate-400 hover:text-white hover:bg-dark-hover transition-all filter-btn">Core Architecture</button>
+                    <button data-filter="scripting" class="px-4 py-2 rounded-lg text-sm font-medium bg-dark-card text-slate-400 hover:text-white hover:bg-dark-hover transition-all filter-btn">Scripting & Audio</button>
+                </div>
+
+                <!-- Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="features-grid">
+                    <!-- Feature Card 1 -->
+                    <div class="feature-card bg-dark-card border border-dark-border rounded-2xl p-6 glow-effect transition-all duration-300 hover:-translate-y-1" data-category="rendering">
+                        <div class="w-12 h-12 rounded-xl bg-brand-500/10 text-brand-400 flex items-center justify-center text-xl mb-4">
+                            <i class="fa-solid fa-cube"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2">Modern Renderer Pipeline</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">Abstraction layer for modern graphics APIs. Supports Vulkan and OpenGL backend pipelines with customizable shader modules.</p>
+                    </div>
+
+                    <!-- Feature Card 2 -->
+                    <div class="feature-card bg-dark-card border border-dark-border rounded-2xl p-6 glow-effect transition-all duration-300 hover:-translate-y-1" data-category="core">
+                        <div class="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center text-xl mb-4">
+                            <i class="fa-solid fa-sitemap"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2">Entity-Component System</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">High-performance data-oriented ECS architecture designed for ultra-fast component iterations and cache efficiency.</p>
+                    </div>
+
+                    <!-- Feature Card 3 -->
+                    <div class="feature-card bg-dark-card border border-dark-border rounded-2xl p-6 glow-effect transition-all duration-300 hover:-translate-y-1" data-category="core">
+                        <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-xl mb-4">
+                            <i class="fa-solid fa-bolt"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2">Multi-Threaded Job System</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">Scalable job scheduler optimizing CPU core usage across physics, rendering submission, and async resource loading.</p>
+                    </div>
+
+                    <!-- Feature Card 4 -->
+                    <div class="feature-card bg-dark-card border border-dark-border rounded-2xl p-6 glow-effect transition-all duration-300 hover:-translate-y-1" data-category="scripting">
+                        <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-xl mb-4">
+                            <i class="fa-solid fa-code"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2">Scripting & Extensibility</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">Embedded Lua / C# binding hooks allowing fast gameplay prototyping without recompiling core engine binaries.</p>
+                    </div>
+
+                    <!-- Feature Card 5 -->
+                    <div class="feature-card bg-dark-card border border-dark-border rounded-2xl p-6 glow-effect transition-all duration-300 hover:-translate-y-1" data-category="rendering">
+                        <div class="w-12 h-12 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-xl mb-4">
+                            <i class="fa-solid fa-layer-group"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2">Asset Management System</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">Hot-reloading asset pipeline for meshes, textures, materials, and audio files with optimized serialization.</p>
+                    </div>
+
+                    <!-- Feature Card 6 -->
+                    <div class="feature-card bg-dark-card border border-dark-border rounded-2xl p-6 glow-effect transition-all duration-300 hover:-translate-y-1" data-category="scripting">
+                        <div class="w-12 h-12 rounded-xl bg-rose-500/10 text-rose-400 flex items-center justify-center text-xl mb-4">
+                            <i class="fa-solid fa-volume-high"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2">Spatialized Audio Core</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">3D positional audio system integrated with realistic attenuation, reverb spaces, and dynamic sound triggers.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Architecture & Modules Section -->
+        <section id="architecture" class="py-20 border-b border-dark-border bg-dark-bg/50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-2xl mx-auto mb-12">
+                    <h2 class="text-3xl font-bold text-white tracking-tight">Engine Architecture</h2>
+                    <p class="text-slate-400 mt-2">Modular layer distribution built for clean dependency management.</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    <!-- Dynamic Module Inspector -->
+                    <div class="lg:col-span-5 space-y-4">
+                        <div onclick="selectModule('core')" id="mod-core" class="module-item p-4 rounded-xl border border-brand-500 bg-brand-500/10 cursor-pointer transition-all">
+                            <div class="flex items-center justify-between">
+                                <h4 class="font-bold text-white flex items-center gap-2">
+                                    <i class="fa-solid fa-microchip text-brand-400"></i> Core Engine Subsystem
+                                </h4>
+                                <i class="fa-solid fa-chevron-right text-xs text-brand-400"></i>
+                            </div>
+                            <p class="text-xs text-slate-400 mt-1">Memory management, custom allocators, math library, logger, and windowing system.</p>
+                        </div>
+
+                        <div onclick="selectModule('render')" id="mod-render" class="module-item p-4 rounded-xl border border-dark-border bg-dark-card hover:bg-dark-hover cursor-pointer transition-all">
+                            <div class="flex items-center justify-between">
+                                <h4 class="font-bold text-slate-200 flex items-center gap-2">
+                                    <i class="fa-solid fa-display text-cyan-400"></i> Render Hardware Interface (RHI)
+                                </h4>
+                                <i class="fa-solid fa-chevron-right text-xs text-slate-500"></i>
+                            </div>
+                            <p class="text-xs text-slate-400 mt-1">Cross-platform abstraction layer interfacing directly with GPU drivers.</p>
+                        </div>
+
+                        <div onclick="selectModule('ecs')" id="mod-ecs" class="module-item p-4 rounded-xl border border-dark-border bg-dark-card hover:bg-dark-hover cursor-pointer transition-all">
+                            <div class="flex items-center justify-between">
+                                <h4 class="font-bold text-slate-200 flex items-center gap-2">
+                                    <i class="fa-solid fa-network-wired text-purple-400"></i> Scene & ECS Manager
+                                </h4>
+                                <i class="fa-solid fa-chevron-right text-xs text-slate-500"></i>
+                            </div>
+                            <p class="text-xs text-slate-400 mt-1">Entity registration, component pools, transform hierarchies, and system execution order.</p>
+                        </div>
+                    </div>
+
+                    <!-- Module Details Display -->
+                    <div class="lg:col-span-7 bg-dark-card border border-dark-border rounded-2xl p-6 relative">
+                        <div class="flex items-center justify-between border-b border-dark-border pb-4 mb-4">
+                            <h3 id="module-title" class="text-lg font-bold text-brand-400">Core Engine Subsystem</h3>
+                            <span class="text-xs font-mono text-slate-400 bg-dark-bg px-2.5 py-1 rounded border border-dark-border">src/Mio/Core</span>
+                        </div>
+                        <p id="module-desc" class="text-slate-300 text-sm leading-relaxed mb-4">
+                            The foundation layer handling memory allocators, thread pool management, low-latency event dispatching, and core engine loop ticks.
+                        </p>
+                        <div class="bg-dark-bg rounded-lg p-4 font-mono text-xs text-slate-300 border border-dark-border">
+                            <p class="text-slate-500 mb-2">// Sample C++ Header Structure</p>
+                            <pre id="module-code" class="overflow-x-auto"><code>namespace Mio {
+    class MIO_API EngineCore {
+    public:
+        void Initialize(const EngineConfig& config);
+        void RunMainLoop();
+        void Shutdown();
+    };
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Getting Started & Code Section -->
+        <section id="quickstart" class="py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-2xl mx-auto mb-12">
+                    <h2 class="text-3xl font-bold text-white tracking-tight">Getting Started</h2>
+                    <p class="text-slate-400 mt-2">Clone, build, and start prototyping with Mio-Engine in minutes.</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Build Steps -->
+                    <div class="space-y-6">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-8 h-8 rounded-lg bg-brand-600/20 text-brand-400 font-bold font-mono flex items-center justify-center shrink-0 border border-brand-500/30">1</div>
+                            <div>
+                                <h4 class="text-white font-semibold">Clone Repository</h4>
+                                <p class="text-sm text-slate-400 mb-2">Retrieve the latest source code along with recursive submodules.</p>
+                                <div class="bg-dark-card border border-dark-border rounded-lg p-3 font-mono text-xs flex justify-between items-center text-slate-300">
+                                    <code>git clone --recursive https://github.com/Mio-129/Mio-Engine.git</code>
+                                    <button onclick="copyCode(this)" class="text-slate-400 hover:text-brand-400 transition-colors ml-2" title="Copy">
+                                        <i class="fa-regular fa-copy"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4">
+                            <div class="w-8 h-8 rounded-lg bg-brand-600/20 text-brand-400 font-bold font-mono flex items-center justify-center shrink-0 border border-brand-500/30">2</div>
+                            <div>
+                                <h4 class="text-white font-semibold">Generate Project with CMake</h4>
+                                <p class="text-sm text-slate-400 mb-2">Build native visual studio solution or makefiles using CMake.</p>
+                                <div class="bg-dark-card border border-dark-border rounded-lg p-3 font-mono text-xs flex justify-between items-center text-slate-300">
+                                    <code>cmake -B build -S . -DCMAKE_BUILD_TYPE=Release</code>
+                                    <button onclick="copyCode(this)" class="text-slate-400 hover:text-brand-400 transition-colors ml-2" title="Copy">
+                                        <i class="fa-regular fa-copy"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4">
+                            <div class="w-8 h-8 rounded-lg bg-brand-600/20 text-brand-400 font-bold font-mono flex items-center justify-center shrink-0 border border-brand-500/30">3</div>
+                            <div>
+                                <h4 class="text-white font-semibold">Compile & Run Examples</h4>
+                                <p class="text-sm text-slate-400 mb-2">Build target binaries and run the sample sandbox application.</p>
+                                <div class="bg-dark-card border border-dark-border rounded-lg p-3 font-mono text-xs flex justify-between items-center text-slate-300">
+                                    <code>cmake --build build --config Release</code>
+                                    <button onclick="copyCode(this)" class="text-slate-400 hover:text-brand-400 transition-colors ml-2" title="Copy">
+                                        <i class="fa-regular fa-copy"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Code Example Snippet -->
+                    <div class="bg-dark-card border border-dark-border rounded-2xl overflow-hidden flex flex-col">
+                        <div class="bg-dark-bg/80 px-4 py-3 border-b border-dark-border flex items-center justify-between">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-3 h-3 rounded-full bg-rose-500/80"></div>
+                                <div class="w-3 h-3 rounded-full bg-amber-500/80"></div>
+                                <div class="w-3 h-3 rounded-full bg-emerald-500/80"></div>
+                                <span class="text-xs font-mono text-slate-400 ml-2">SandboxApp.cpp</span>
+                            </div>
+                            <button onclick="copyCodeById('cpp-sample', this)" class="text-xs text-slate-400 hover:text-brand-400 flex items-center space-x-1">
+                                <i class="fa-regular fa-copy"></i>
+                                <span>Copy</span>
+                            </button>
+                        </div>
+                        <div class="p-4 font-mono text-xs text-slate-300 overflow-x-auto flex-grow">
+                            <pre id="cpp-sample"><span class="text-purple-400">#include</span> <span class="text-emerald-400">&lt;Mio/Engine.hpp&gt;</span>
+
+<span class="text-blue-400">class</span> <span class="text-amber-300">SandboxApp</span> : <span class="text-blue-400">public</span> Mio::<span class="text-amber-300">Application</span> {
+<span class="text-blue-400">public</span>:
+    <span class="text-amber-300">SandboxApp</span>() {
+        <span class="text-slate-500">// Spawn entity in scene</span>
+        <span class="text-blue-400">auto</span> entity = GetScene()-&gt;<span class="text-amber-300">CreateEntity</span>(<span class="text-emerald-400">"Player"</span>);
+        entity.<span class="text-amber-300">AddComponent</span>&lt;Mio::<span class="text-amber-300">MeshComponent</span>&gt;(<span class="text-emerald-400">"models/cube.obj"</span>);
+        entity.<span class="text-amber-300">AddComponent</span>&lt;Mio::<span class="text-amber-300">TransformComponent</span>&gt;();
+    }
+
+    <span class="text-blue-400">void</span> <span class="text-amber-300">OnUpdate</span>(<span class="text-blue-400">float</span> deltaTime) <span class="text-blue-400">override</span> {
+        MIO_LOG_INFO(<span class="text-emerald-400">"Delta Time: {0}s"</span>, deltaTime);
+    }
+};
+
+Mio::<span class="text-amber-300">Application</span>* Mio::<span class="text-amber-300">CreateApplication</span>() {
+    <span class="text-blue-400">return new</span> <span class="text-amber-300">SandboxApp</span>();
+}</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark-bg border-t border-dark-border py-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-brand-600 to-brand-accent flex items-center justify-center text-white font-bold text-sm">
+                    &lt;M&gt;
+                </div>
+                <span class="text-sm font-semibold text-slate-300">Mio-Engine</span>
+                <span class="text-xs text-slate-500">| High Performance Game Engine Architecture</span>
+            </div>
+
+            <div class="flex items-center space-x-6 text-sm text-slate-400">
+                <a href="https://github.com/Mio-129/Mio-Engine" target="_blank" class="hover:text-brand-400 transition-colors">
+                    <i class="fa-brands fa-github text-lg"></i>
+                </a>
+                <a href="https://github.com/Mio-129/Mio-Engine/issues" target="_blank" class="hover:text-brand-400 transition-colors">
+                    Issues
+                </a>
+                <a href="https://github.com/Mio-129/Mio-Engine/stargazers" target="_blank" class="hover:text-brand-400 transition-colors">
+                    Stars
+                </a>
+            </div>
+
+            <p class="text-xs text-slate-500">
+                Open Source project under GitHub repository <a href="https://github.com/Mio-129/Mio-Engine" target="_blank" class="text-brand-400 hover:underline">Mio-129/Mio-Engine</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Interactive JS Scripts -->
+    <script>
+        // Feature Tag Filter Logic
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const featureCards = document.querySelectorAll('.feature-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Update button active states
+                filterBtns.forEach(b => {
+                    b.classList.remove('bg-brand-600', 'text-white', 'active');
+                    b.classList.add('bg-dark-card', 'text-slate-400');
+                });
+                btn.classList.add('bg-brand-600', 'text-white', 'active');
+                btn.classList.remove('bg-dark-card', 'text-slate-400');
+
+                const filter = btn.getAttribute('data-filter');
+
+                featureCards.forEach(card => {
+                    if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Architecture Subsystem Interactive Showcase
+        const moduleData = {
+            core: {
+                title: 'Core Engine Subsystem',
+                path: 'src/Mio/Core',
+                desc: 'The foundation layer handling memory allocators, thread pool management, low-latency event dispatching, and core engine loop ticks.',
+                code: `namespace Mio {
+    class MIO_API EngineCore {
+    public:
+        void Initialize(const EngineConfig& config);
+        void RunMainLoop();
+        void Shutdown();
+    };
+}`
+            },
+            render: {
+                title: 'Render Hardware Interface (RHI)',
+                path: 'src/Mio/Renderer',
+                desc: 'Abstraction pipeline translating dynamic submission commands to Vulkan or OpenGL draw calls asynchronously.',
+                code: `namespace Mio {
+    class MIO_API RenderCommand {
+    public:
+        static void DrawIndexed(const Ref<VertexArray>& va);
+        static void SetClearColor(const glm::vec4& color);
+    };
+}`
+            },
+            ecs: {
+                title: 'Scene & ECS Manager',
+                path: 'src/Mio/Scene',
+                desc: 'High-performance component storage and view iterator system powered by contiguous memory pools.',
+                code: `namespace Mio {
+    class MIO_API Scene {
+    public:
+        Entity CreateEntity(const std::string& name = "");
+        void OnUpdate(Timestep ts);
+    };
+}`
+            }
+        };
+
+        function selectModule(key) {
+            const data = moduleData[key];
+            document.getElementById('module-title').innerText = data.title;
+            document.getElementById('module-desc').innerText = data.desc;
+            document.getElementById('module-code').innerText = data.code;
+
+            // Highlight selected item
+            document.querySelectorAll('.module-item').forEach(item => {
+                item.classList.remove('border-brand-500', 'bg-brand-500/10');
+                item.classList.add('border-dark-border', 'bg-dark-card');
+            });
+
+            const activeItem = document.getElementById(`mod-${key}`);
+            if (activeItem) {
+                activeItem.classList.remove('border-dark-border', 'bg-dark-card');
+                activeItem.classList.add('border-brand-500', 'bg-brand-500/10');
+            }
+        }
+
+        // Copy Code Functionality
+        function copyCode(btn) {
+            const codeText = btn.previousElementSibling.innerText;
+            navigator.clipboard.writeText(codeText).then(() => {
+                const icon = btn.querySelector('i');
+                icon.className = 'fa-solid fa-check text-emerald-400';
+                setTimeout(() => {
+                    icon.className = 'fa-regular fa-copy';
+                }, 2000);
+            });
+        }
+
+        function copyCodeById(id, btn) {
+            const codeText = document.getElementById(id).innerText;
+            navigator.clipboard.writeText(codeText).then(() => {
+                const span = btn.querySelector('span');
+                const oldText = span.innerText;
+                span.innerText = 'Copied!';
+                setTimeout(() => {
+                    span.innerText = oldText;
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
